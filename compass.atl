@@ -1,0 +1,66 @@
+( Calibrate and read bq aquaris magnetometer )
+( author skvamme )
+
+FILE fd
+32 string magraw
+32 string accraw
+2variable xmin
+2variable xmax
+2variable ymin
+2variable ymax
+2variable zmin
+2variable zmax
+2variable x
+2variable y
+2variable z
+3.14159265358979323846 2constant pi
+( values from last findextremes hardcoded )
+19.0 xmax 2!
+-87.0 xmin 2!
+-12.0 ymax 2!
+-125.0 ymin 2!
+136.0 zmax 2!
+33.0 zmin 2!
+
+
+
+( Read string from magnetometer: "-38 -91 125". Put in string magraw )
+( -- )
+: magdevread "/sys/devices/platform/msensor/driver/sensordata" 1 fd fopen drop fd magraw fgets drop fd fclose ;
+
+( str -- z y x )
+: tofloat strint swap strint swap strint swap drop float rot float 4 roll float ;
+
+( Remove hard iron distortion )
+( z y x -- z1 y1 x1 )
+: calibrate xmax 2@ xmin 2@ f+ 2.0 f/ f- 2rot
+			zmax 2@ zmin 2@ f+ 2.0 f/ f- 2rot
+			ymax 2@ ymin 2@ f+ 2.0 f/ f- 2rot ;
+
+
+( -- )
+: heading magdevread magraw tofloat calibrate 2swap atan2 180.0 f* pi f/ -1.0 f* 2dup 0.0 f< if 360.0 f+ then fix . cr 2drop ;
+
+: run begin heading 1000000 sleep again ;
+
+( ********************************* Calibration words ********************************************************* )
+
+( find the extremes of x y and z. Puts result in variables )
+( z y x -- )
+: minormax x 2! y 2! z 2!
+			z 2@ zmax 2@ f> if z 2@ zmax 2! then 
+		   	z 2@ zmin 2@ f< if z 2@ zmin 2! then
+		   	y 2@ ymax 2@ f> if y 2@ ymax 2! then
+		   	y 2@ ymin 2@ f< if y 2@ ymin 2! then
+		   	x 2@ xmax 2@ f> if x 2@ xmax 2! then 
+		   	x 2@ xmin 2@ f< if x 2@ xmin 2! then ;
+
+: printval 
+	." "xmax: " xmax 2@ f. ." " xmin: " xmin 2@ f. cr
+	." "ymax: " ymax 2@ f. ." " ymin: " ymin 2@ f. cr
+ 	." "zmax: " zmax 2@ f. ." " zmin: " zmin 2@ f. cr ;
+
+( loop the minormax to find the extremes. Let it run for a few minutes while moving the phone in all directions )
+( -- )
+: findextremes 1000.0 xmin 2! -1000.0 xmax 2! 1000.0 ymin 2! -1000.0 ymax 2! 1000.0 zmin 2! -1000.0 zmax 2!
+	begin magdevread magraw tofloat minormax printval again ;
