@@ -2,7 +2,7 @@
 ( and bearing to that saved position at a later time )
 ( author skvamme )
 ( Keep line length well below 132. You need to implement the primitive word sleep in atlast.c or clone skvamme/atlast )
-( from github. Run with sudo ./atlast -ireticle.atl )
+( from github. Run with sudo ./atlast -icompass.atl )
 
 FILE fd
 FILE logfile
