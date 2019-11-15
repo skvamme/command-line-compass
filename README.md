@@ -15,4 +15,4 @@ Usefull words are:
   dist for getting distance to saved position.
   For these three words to be able to pick current gps location, type e.g. save and switch over to the weather app or a map for a minute or so. These apps are activating the gps while visible so the compass can grab lat and long readings in the background.
   
-  When you switch back to the terminal app it says that the app is stopped. Type fg and enter key a few times to get it back in foreground again.
+  When you switch back to the terminal app it says that the app is stopped. Type fg and the enter key a few times to get it back in foreground again.
