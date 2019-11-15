@@ -3,6 +3,8 @@ Ubuntu Touch @UBports based cl compass. It is running in my version of atlast. C
 
 The compass has man overboard functionality. Current location can be saved and later get distance and bearing to that saved place.
 
+Start the terminal app and start atlast with sudo ./atlast -icompass.atl
+
 Usefull words are:
   init for calibration.
   run for compass.
