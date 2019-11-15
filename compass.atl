@@ -21,7 +21,7 @@ FILE savefile
 2variable y
 2variable z
 3.14159265358979323846 2constant pi
-( values from last findextremes hardcoded so i do not have to run init every time )
+( values from last calibration hardcoded so i do not have to run init every time )
 27.0 xmax 2!
 -53.0 xmin 2!
 33.0 ymax 2!
@@ -93,9 +93,14 @@ FILE savefile
 ( -- lat lon )
 : pos startlog readlog stoplog ;
 
+( Get distance to saved position )
+( -- )
 : dist pos consult distance . ;
 
+( Get bearing to saved position )
+( -- )
 : ber pos consult bearing . ;
+
 ( **************************************************************************************************************** )
 ( Save current location in a file save.dat Switch over to the weather app to get gps readings.                     )
 ( **************************************************************************************************************** )
