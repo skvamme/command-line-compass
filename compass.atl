@@ -1,7 +1,14 @@
-( Calibrate and read bq aquaris magnetometer )
+( Calibrate and read bq aquaris magnetometer. You can also save current position, and find out distance )
+( and bearing to that saved position at a later time )
 ( author skvamme )
+( Keep line length well below 132. You need to implement the primitive word sleep in atlast.c or clone skvamme/atlast )
+( from github. Run with sudo ./atlast -ireticle.atl )
 
 FILE fd
+FILE logfile
+FILE savefile
+132 string logline1
+132 string logline2
 32 string magraw
 32 string accraw
 2variable xmin
@@ -14,17 +21,91 @@ FILE fd
 2variable y
 2variable z
 3.14159265358979323846 2constant pi
-( values from last findextremes hardcoded )
-19.0 xmax 2!
--87.0 xmin 2!
--12.0 ymax 2!
--125.0 ymin 2!
-136.0 zmax 2!
-33.0 zmin 2!
+( values from last findextremes hardcoded so i do not have to run init every time )
+27.0 xmax 2!
+-53.0 xmin 2!
+33.0 ymax 2!
+-67.0 ymin 2!
+5.0 zmax 2!
+-37.0 zmin 2!
+
+2variable lat1
+2variable lon1
+2variable lat2
+2variable lon2
+
+( Returns the saved position from save.dat as two float decimal degrees )
+( -- lat lon )
+: consult "save.dat" 1 savefile fopen .
+             savefile logline1 fgets .
+             savefile logline2 fgets .
+             savefile fclose
+             logline1 strreal rot drop logline2 strreal rot drop ;
+
+( deg -- rad )
+: 2radian pi f* 180.0 f/ ;
+
+( Returns bearing between two points, in degrees 0-360 )
+( lat1 lon1 lat2 lon2 -- degrees )
+: bearing lon2 2! lat2 2! lon1 2! lat1 2!
+             lat1 2@ 2radian lat1 2!
+             lat2 2@ 2radian lat2 2!
+             lon2 2@ lon1 2@ f- 2radian lon1 2!
+             lon1 2@ sin
+             lat2 2@ cos f* \ Y is now on stack
+             lat1 2@ cos
+             lat2 2@ sin f*
+             lat1 2@ sin
+             lat2 2@ cos
+             lon1 2@ cos f* f* f- \ Stack is now Y X
+             atan2 180.0 f* pi f/
+             fix 360 + 360 mod ;
+
+( Returns distance between two points, in integer meters )
+( A flat earth approximation. Good for short distances e.g. between trackpoints. )
+( lat1 lon1 lat2 lon2 -- dist )
+: distance lon2 2! lat2 2! lon1 2! lat1 2!
+              lat2 2@ 2radian lat1 2@ 2radian f-
+              lon2 2@ 2radian lon1 2@ 2radian f-
+              lat1 2@ cos f*
+ \ On stack now is distance north and distance east
+              2.0 pow 2swap 2.0 pow f+ sqrt \ Absolute distance in radians
+              1852.0 f* 60.0 f* 180.0 f* pi f/ fix ; \ radians to meters
 
 
+( Read latest lat and long from logfile )
+( -- lat lon )
+: readlog "pos.dat" 1 logfile fopen . 
+           begin 100000 sleep logfile logline1 fgets . logline1 ":" strchar 0= until
+           logfile logline2 fgets .
+           logfile fclose 
+           logline1 10 -1 logline1 substr logline2 10 -1 logline2 substr
+           logline1 strreal rot drop logline2 strreal rot drop ;
 
-( Read string from magnetometer: "-38 -91 125". Put in string magraw )
+( -- )
+: stoplog "pkill dbus-monitor" system . ;
+
+( Start writing to file pos.dat )
+( -- )
+: startlog "pkill dbus-monitor; dbus-monitor --system \"interface=com.ubuntu.location.Service.Session\" > pos.dat &" system . ;
+
+( Get current position, in decimal degrees. )
+( -- lat lon )
+: pos startlog readlog stoplog ;
+
+: dist pos consult distance . ;
+
+: ber pos consult bearing . ;
+( **************************************************************************************************************** )
+( Save current location in a file save.dat Switch over to the weather app to get gps readings.                     )
+( **************************************************************************************************************** )
+(  -- )
+: save pos "%f" logline1 fstrform "%f" logline2 fstrform            
+            "save.dat" 10 savefile fopen .
+            logline2 savefile fputs . logline1 savefile fputs .
+            savefile fclose ." "Pos Saved" cr ;
+
+( Read string from magnetometer: "-38 -91 125" )
 ( -- )
 : magdevread "/sys/devices/platform/msensor/driver/sensordata" 1 fd fopen drop fd magraw fgets drop fd fclose ;
 
@@ -39,11 +120,15 @@ FILE fd
 
 
 ( -- )
-: heading magdevread magraw tofloat calibrate 2swap atan2 180.0 f* pi f/ -1.0 f* 2dup 0.0 f< if 360.0 f+ then fix . cr 2drop ;
+: heading magdevread magraw tofloat calibrate 2swap 
+                        atan2 180.0 f* pi f/ -1.0 f* 2dup 0.0 f< if 360.0 f+ then fix . cr 2drop ;
 
+( ************************************************************************************************************* )
+( Use run to start the command line compass. Break with ctrl-C                                                  )
+( ************************************************************************************************************* )
+( -- )
 : run begin heading 1000000 sleep again ;
 
-( ********************************* Calibration words ********************************************************* )
 
 ( find the extremes of x y and z. Puts result in variables )
 ( z y x -- )
@@ -56,11 +141,17 @@ FILE fd
 		   	x 2@ xmin 2@ f< if x 2@ xmin 2! then ;
 
 : printval 
-	." "xmax: " xmax 2@ f. ." " xmin: " xmin 2@ f. cr
-	." "ymax: " ymax 2@ f. ." " ymin: " ymin 2@ f. cr
- 	." "zmax: " zmax 2@ f. ." " zmin: " zmin 2@ f. cr ;
+                        xmax 2@ f. ." ".0 xmax 2!" cr
+                        xmin 2@ f. ." ".0 xmin 2!" cr
+                        ymax 2@ f. ." ".0 ymax 2!" cr
+                        ymin 2@ f. ." ".0 ymin 2!" cr
+                        zmax 2@ f. ." ".0 zmax 2!" cr
+                        zmin 2@ f. ." ".0 zmin 2!" cr cr ;
 
-( loop the minormax to find the extremes. Let it run for a few minutes while moving the phone in all directions )
+( ************************************************************************************************************ )
+( Use init to calibrate the compass, break with ctrl-C                                                         )
+( Let it run for a minute while moving the phone in all compass directions. Then type run.                     )
+( ************************************************************************************************************ )
 ( -- )
-: findextremes 1000.0 xmin 2! -1000.0 xmax 2! 1000.0 ymin 2! -1000.0 ymax 2! 1000.0 zmin 2! -1000.0 zmax 2!
+: init  1000.0 xmin 2! -1000.0 xmax 2! 1000.0 ymin 2! -1000.0 ymax 2! 1000.0 zmin 2! -1000.0 zmax 2!
 	begin magdevread magraw tofloat minormax printval again ;
