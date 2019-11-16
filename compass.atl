@@ -109,8 +109,27 @@ FILE savefile
             "save.dat" 10 savefile fopen .
             logline2 savefile fputs . logline1 savefile fputs .
             savefile fclose ." "Pos Saved" cr ;
+( **************************************************************************************************************** )
+( Send an SMS )
+( **************************************************************************************************************** )
+( message phone_number -- )
+: send-sms "/usr/share/ofono/scripts/send-sms \"" command strcat
+       command strcat
+       "\" \"" command strcat
+       command strcat
+       "\" 0" command strcat
+       command system . ;
 
+( Send current location as an SMS Insert mobile phone number at 1234567890 )
+( -- )
+: smspos pos 2drop 2drop 
+       " " logline1 strcat
+       logline2 logline1 strcat
+       logline1 "1234567890" send-sms ;
+
+( ******************************************************************************************************************** )
 ( Read string from magnetometer: "-38 -91 125" )
+( ******************************************************************************************************************** )
 ( -- )
 : magdevread "/sys/devices/platform/msensor/driver/sensordata" 1 fd fopen drop fd magraw fgets drop fd fclose ;
 
