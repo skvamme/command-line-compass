@@ -19,4 +19,4 @@ Usefull words are:
   
 You will see lots of 0 and -1, and at end of last line is the result. 0 and -1 are for debugging.
 
-The word send-sms can be used to send current location, saved location or other message as an SMS.
+The word send-sms can be used to send current location, saved location or other message as an SMS. The word smspos grabs current lat and long and sends that as an SMS. To grab the current position, switch over to the weather app or a map for a minute. Replace the dummy phone number with a valid one in the file compass.atl
