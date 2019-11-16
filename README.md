@@ -13,7 +13,7 @@ Usefull words are:
   save for saving the current location.
   ber for getting bearing to saved position.
   dist for getting distance to saved position.
-  For these three words to be able to pick current gps location, type e.g. save and switch over to the weather app or a map for a minute or so. These apps are activating the gps while visible so the compass can grab lat and long readings and do all calculations in the background.
+  For these three words to be able to pick current gps location, type the word and switch over to the weather app or a map for a minute or so. These apps are activating the gps while visible so the compass can grab lat and long readings and do all calculations in the background.
   
   When you switch back to the terminal app it says that the app is stopped. Type fg to get it back in foreground again.
   
