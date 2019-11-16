@@ -120,7 +120,7 @@ FILE savefile
        "\" 0" command strcat
        command system . ;
 
-( Send current location as an SMS Insert mobile phone number at 1234567890 )
+( Send current location as an SMS )
 ( -- )
 : smspos pos 2drop 2drop 
        " " logline1 strcat
