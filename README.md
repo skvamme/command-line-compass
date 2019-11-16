@@ -3,7 +3,7 @@ Ubuntu Touch @UBports based cl compass. Tested on BQ Aquaris E4.5 aka "kirillin"
 
 The compass has man overboard functionality. Current location can be saved and later you can get distance and bearing to that saved place.
 
-Start the terminal app and start atlast with sudo ./atlast -icompass.atl
+Start the terminal app and start atlast with sudo ./atlast -icompass.atl Stop atlast with Ctrl-D
 
 Usefull words are:
   init for calibration.
