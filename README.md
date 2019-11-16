@@ -1,5 +1,7 @@
 # command-line-compass
-Ubuntu Touch @UBports based cl compass. Tested on BQ Aquaris E4.5 aka "kirillin". It is running in my version of atlast Forth. https://github.com/skvamme/atlast Compile atlast on a raspberry pi and copy over to phablet directory on the mobile using e. g. scp
+Ubuntu Touch @UBports based cl compass. Tested on BQ Aquaris E4.5 aka "kirillin". It is running in my version of atlast Forth. https://github.com/skvamme/atlast Compile atlast on a raspberry pi and copy over to phablet directory on the mobile using e.g. scp
+
+If you are new to Forth I recommend reading this great book by Leo Brodie http://home.iae.nl/users/mhx/sf.html
 
 The compass has man overboard functionality. Current location can be saved and later you can get distance and bearing to that saved place.
 
