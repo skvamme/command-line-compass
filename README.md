@@ -18,3 +18,5 @@ Usefull words are:
   When you switch back to the terminal app it says that the app is stopped. Type fg and the enter key a few times to get it back in foreground again.
   
 You will see lots of 0 and -1, and at end of last line is the result. 0 and -1 are for debugging.
+
+The word send-sms can be used to send current location, saved location or other message as an SMS.
