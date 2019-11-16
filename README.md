@@ -10,7 +10,7 @@ Start the terminal app and start atlast with sudo ./atlast -icompass.atl Stop at
 Usefull words are:
   init for calibration.
   run for compass.
-  Both these words run until stopped with Ctrl-C
+  Both these words run until stopped with Ctrl-C. Just type the word and press Enter.
   
   save for saving the current location.
   ber for getting bearing to saved position.
