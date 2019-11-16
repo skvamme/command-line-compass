@@ -125,7 +125,11 @@ FILE savefile
 : smspos pos 2drop 2drop 
        " " logline1 strcat
        logline2 logline1 strcat
-       logline1 "1234567890" send-sms ;
+       logline1 smsto send-sms ;
+       
+( This is a dummy mobile phone number. Cange it here in source code or type the command : smsto "yournumber_here" ; )
+( -- )
+: smsto "1234567890" ;
 
 ( ******************************************************************************************************************** )
 ( Read string from magnetometer: "-38 -91 125" )
