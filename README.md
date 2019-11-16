@@ -3,7 +3,7 @@ Ubuntu Touch @UBports based cl compass. Tested on BQ Aquaris E4.5 aka "kirillin"
 
 If you are new to Forth I recommend reading this great book by Leo Brodie http://home.iae.nl/users/mhx/sf.html
 
-The compass has man overboard functionality. Current location can be saved and later you can get distance and bearing to that saved place. It works equally well when you are "lost in town" and want to get back to your hotel.
+The compass has man overboard functionality. Current location can be saved and later you can get distance and bearing to that saved place. It works equally well when you are "lost in town" and want to get back to your hotel. No maps required.
 
 Start the terminal app and start atlast with sudo ./atlast -icompass.atl Stop atlast with Ctrl-D
 
