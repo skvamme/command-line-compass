@@ -16,7 +16,7 @@ Usefull words are:
   berdist for getting bearing and distance to saved position.
   For these two words to be able to pick current gps location, type the word and switch over to the weather app or a map for a minute or so. These apps are activating the gps while visible so the compass can grab lat and long readings and do all calculations in the background.
   
-  When you switch back to the terminal app it says that the app is stopped. Type fg to get it back in foreground again.
+  If - when you switch back to the terminal app - it says that the app is stopped. Type fg to get it back in foreground again.
   
 You will see lots of 0 and -1, and at end of last line is the result. 0 and -1 are for debugging.
 
