@@ -93,13 +93,12 @@ FILE savefile
 ( -- lat lon )
 : pos startlog readlog stoplog ;
 
-( Get distance to saved position )
+( ***************************************************************************************************************** )
+( get bearing and distance to saved position. Switch over to the weather app to get gps readings.                   )
+( ***************************************************************************************************************** )
 ( -- )
-: dist pos consult distance . ;
-
-( Get bearing to saved position )
-( -- )
-: ber pos consult bearing . ;
+: berdist pos 2over 2over consult bearing cr ." "Bearing: " . ." "degrees" cr
+                          consult distance cr ." "Distance: " . ." "meters" cr ;
 
 ( **************************************************************************************************************** )
 ( Save current location in a file save.dat Switch over to the weather app to get gps readings.                     )
