@@ -13,9 +13,8 @@ Usefull words are:
   Both these words run until stopped with Ctrl-C. Just type the word and press Enter. When you run init you should move in all compass directions until no more changes are visible in xmax, ymax ... Then type Ctrl-C and type run
   
   save for saving the current location.
-  ber for getting bearing to saved position.
-  dist for getting distance to saved position.
-  For these three words to be able to pick current gps location, type the word and switch over to the weather app or a map for a minute or so. These apps are activating the gps while visible so the compass can grab lat and long readings and do all calculations in the background.
+  berdist for getting bearing and distance to saved position.
+  For these two words to be able to pick current gps location, type the word and switch over to the weather app or a map for a minute or so. These apps are activating the gps while visible so the compass can grab lat and long readings and do all calculations in the background.
   
   When you switch back to the terminal app it says that the app is stopped. Type fg to get it back in foreground again.
   
