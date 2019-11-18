@@ -28,3 +28,6 @@ The word smspos grabs current lat and long and sends that as an SMS. To let the 
 
 The word tcppos is sending current position over the internet to a server, replace the current ip-address and port with a real one.
 The word tcprun is sending compass heading to a server once every second. Break the command with Ctrl-C.
+
+On the server host you can use netcat, like this to listen at port 8080
+nc -l -p 8080 -k
