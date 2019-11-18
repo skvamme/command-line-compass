@@ -1,6 +1,8 @@
 # command-line-compass
 Ubuntu Touch @UBports based cl compass. Tested on BQ Aquaris E4.5 aka "kirillin". It is running in my version of atlast Forth. https://github.com/skvamme/atlast Compile atlast on a raspberry pi and copy over to phablet directory on the mobile using e.g. scp
 
+The compass is programmable in Forth and can display values on command line, or as an SMS to someone or upload to a server on the internet.
+
 If you are new to Forth I recommend reading this great book by Leo Brodie https://www.forth.com/starting-forth/0-starting-forth/
 
 The compass has man overboard functionality. Current location can be saved and later you can get distance and bearing to that saved place. It works equally well when you are "lost in town" and want to get back to your hotel. No maps required.
