@@ -1,8 +1,12 @@
+\ *heap 6100
+
 ( Calibrate and read bq aquaris magnetometer. You can also save current position, and find out distance )
-( and bearing to that saved position at a later time )
+( and bearing to that saved position at a later time. Position, bearing etc can be sent by SMS or over the web )
 ( author skvamme )
-( Keep line length well below 132. You need to implement the primitive word sleep in atlast.c or clone skvamme/atlast )
-( from github. Run with sudo ./atlast -icompass.atl )
+( Keep line length in this file below 128. )
+( You need to clone skvamme/atlast Make sure the #define TCP at line 61 in atlast.c )
+( is not commented out when you compile atlast from github. )
+( Run with sudo ./atlast -icompass.atl )
 
 FILE fd
 FILE logfile
@@ -129,7 +133,7 @@ FILE savefile
        " " logline1 strcat
        logline2 logline1 strcat
        logline1 smsto send-sms ;
-       
+
 ( ******************************************************************************************************************** )
 ( Read string from magnetometer: "-38 -91 125" )
 ( ******************************************************************************************************************** )
@@ -145,7 +149,6 @@ FILE savefile
 			zmax 2@ zmin 2@ f+ 2.0 f/ f- 2rot
 			ymax 2@ ymin 2@ f+ 2.0 f/ f- 2rot ;
 
-
 ( -- )
 : heading magdevread magraw tofloat calibrate 2swap 
                         atan2 180.0 f* pi f/ -1.0 f* 2dup 0.0 f< if 360.0 f+ then fix . cr 2drop ;
@@ -156,6 +159,28 @@ FILE savefile
 ( -- )
 : run begin heading 1000000 sleep again ;
 
+( *************************************************************************************************************** )
+( Run over internet with tcprun and send position to e.g. an autopilot listening to 192.168.0.18 port 8080        )
+( *************************************************************************************************************** )
+( -- )
+: tcppos "192.168.0.18" 8080 tcpconnect .
+             pos 2drop 2drop
+             " " logline1 strcat
+             logline2 logline1 strcat
+             logline1 22 tcpsend .
+             tcpclose ;
+
+( -- )
+: tcpheading magdevread magraw tofloat calibrate 2swap
+                        atan2 180.0 f* pi f/ -1.0 f* 2dup 0.0 f< if 360.0 f+ then fix "%ld" logline1 strform 2drop ;
+
+
+( -- )
+: tcprun "192.168.0.18" 8080 tcpconnect . begin tcpheading logline1 4 tcpsend . 1000000 sleep again ;
+
+( **************************************************************************************************************** )
+( Calibration words below )
+( **************************************************************************************************************** )
 
 ( find the extremes of x y and z. Puts result in variables )
 ( z y x -- )
