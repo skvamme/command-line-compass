@@ -31,7 +31,7 @@ The word smspos grabs current lat and long and sends that as an SMS. To let the 
 
 Replace the dummy phone number with a valid one in the file compass.atl or if you want to change the number temporarily you can redefine the word smsto in the running atlast: Type : smsto "the_number_here" ;  Mind the spaces. Atlast will always use the latest definition of the word smsto. And forget all of them when you switch of.
 
-The word tcppos is sending current position over the internet to a server, replace the current ip-address and port with a real one.
+The word tcppos is sending current position over the internet to a server, replace the current ip-address and port in file compass.atl with a real one.
 The word tcprun is sending compass heading to a server once every second. Break the command with Ctrl-C.
 
 NOTE: If you are trying to upload to a server that is not responding, the compass will terminate.
