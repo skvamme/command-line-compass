@@ -34,5 +34,7 @@ Replace the dummy phone number with a valid one in the file compass.atl or if yo
 The word tcppos is sending current position over the internet to a server, replace the current ip-address and port with a real one.
 The word tcprun is sending compass heading to a server once every second. Break the command with Ctrl-C.
 
+NOTE: If you are trying to upload to a server that is not responding, the compass will terminate.
+
 On the server host you can use netcat, like this to listen at port 8080
 nc -l -p 8080 -k
