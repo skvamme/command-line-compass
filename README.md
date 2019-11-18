@@ -5,15 +5,18 @@ The compass is programmable in Forth and can display values on command line, or 
 
 If you are new to Forth I recommend reading this great book by Leo Brodie https://www.forth.com/starting-forth/0-starting-forth/
 
-The compass has man overboard functionality. Current location can be saved and later you can get distance and bearing to that saved place. It works equally well when you are "lost in town" and want to get back to your hotel. No maps required.
+The compass has man overboard functionality. Current location can be saved and later, you can get distance and bearing to that saved place. It works equally well when you are "lost in town" and want to get back to your hotel. No maps or internet required.
 
 Start the terminal app and start atlast with sudo ./atlast -icompass.atl Stop atlast with Ctrl-D
+
+A word in atlast is in itself an executable piece of code, just type the word and press enter.
 
 Usefull words are:
   init for calibration.
   run for compass.
   Both these words run until stopped with Ctrl-C. Just type the word and press Enter. When you run init you should move in all compass directions until no more changes are visible in xmax, ymax ... Then type Ctrl-C and type run
   
+More words:
   save for saving the current location.
   berdist for getting bearing and distance to saved position.
   For these two words to be able to pick current gps location, type the word and press enter and switch over to the weather app or a map for a minute or so. These apps are activating the gps while visible so the compass can grab lat and long readings and do all calculations in the background.
