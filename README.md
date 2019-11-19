@@ -1,5 +1,5 @@
 # command-line-compass
-Ubuntu Touch @UBports based cl compass. Tested on BQ Aquaris E4.5 aka "kirillin". It is running in my version of atlast Forth. https://github.com/skvamme/atlast Compile atlast on a raspberry pi and copy over to phablet directory on the mobile using e.g. scp
+Ubuntu Touch @UBports based cl compass. Tested on BQ Aquaris E4.5 aka "kirillin". It is running in my version of atlast Forth. https://github.com/skvamme/atlast Compile atlast on a raspberry pi and copy atlast and compass.atl over to phablet directory on the mobile using e.g. scp
 
 The compass is programmable in Forth and can display values on command line, or as an SMS to someone or upload to a server on the internet.
 
