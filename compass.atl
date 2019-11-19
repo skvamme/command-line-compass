@@ -179,6 +179,19 @@ FILE savefile
 : tcprun "192.168.0.18" 8080 tcpconnect . begin tcpheading logline1 4 tcpsend . 1000000 sleep again ;
 
 ( **************************************************************************************************************** )
+( Create a gpx track and save to file save.gpx. writetrack is running as long as you are moving.
+( **************************************************************************************************************** )
+( -- )
+: writetrack "save.gpx" 10 savefile fopen .
+                        "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" savefile fputs .
+                        "<gpx creator=\"skvamme\" version=\"1.0\"><trk><trkseg>" savefile fputs . cr
+                        pos begin 60000000 sleep "<trkpt lat=\"" command strcpy logline1 command strcat
+                        "\" lon=\"" command strcat logline2 command strcat "\"></trkpt>" command strcat
+                        command savefile fputs . cr
+                        pos 2over 2over 11 roll 11 roll distance 10 < until \ stack now lat long
+                        "</trkseg></trk></gpx>" savefile fputs . savefile fclose 2drop 2drop ." "writetrack End " cr ;
+
+( **************************************************************************************************************** )
 ( Calibration words below )
 ( **************************************************************************************************************** )
 
