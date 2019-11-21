@@ -39,4 +39,4 @@ NOTE: If you are trying to upload to a server that is not responding, the compas
 On the server host you can use netcat, like this to listen at port 8080
 nc -l -p 8080 -k
 
-Word for saving gps tracks is writetrack. The file save.gpx can be imported into many mapping applications. Drag it into google maps.
+Word for saving gps tracks is writetrack. The file save.gpx can be imported into many mapping applications. Running until GPS data stops, so switch from weather or map for 10 seconds or more. Go back to weather and the gpx file will be complete with taxs and file properly closed.
