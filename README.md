@@ -39,4 +39,4 @@ NOTE: If you are trying to upload to a server that is not responding, the compas
 On the server host you can use netcat, like this to listen at port 8080
 nc -l -p 8080 -k
 
-Word for saving gps tracks is writetrack. The file save.gpx can be imported into many mapping applications. Running until GPS data stops, so switch from weather or map for 10 seconds or more. Go back to weather and the gpx file will be complete with ending XML-tags and file closed.
+Word for saving gps tracks is writetrack. The file save.gpx can be imported into many mapping applications. Running until GPS data stops, so switch from weather or map for 10 seconds or more. Go back to weather and the gpx file will be complete with ending XML-tags and file closed. Make sure the phone is set to never lock the screen when you are recording a GPS track. Locking screen will stop GPS recordings.
